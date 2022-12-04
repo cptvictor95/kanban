@@ -19,7 +19,11 @@ const Column: React.FC<{ column: Column }> = ({ column }) => {
           {column.title}
         </h2>
         <p className="text-bold text-md min-w-fit text-white">
-          {cards?.data?.length} issues
+          {cards?.data?.length == 0
+            ? ""
+            : cards?.data?.length == 1
+            ? `${cards?.data?.length} issue`
+            : `${cards?.data?.length} issues`}
         </p>
       </header>
       {cards?.data?.map((card) => (
