@@ -5,8 +5,7 @@ import { Loading } from "./Loading";
 
 export const Board = () => {
   const columns = trpc.column.getAll.useQuery();
-  const loading =
-    columns.isLoading || columns.isFetching || columns.isRefetching;
+  const loading = columns.isFetching;
   return (
     <section className="flex gap-4">
       {loading ? (

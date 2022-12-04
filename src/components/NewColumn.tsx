@@ -12,7 +12,7 @@ export const NewColumn: React.FC = () => {
   const { mutateAsync } = trpc.column.create.useMutation();
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm<ColumnDTO>({
-    mode: "onSubmit",
+    mode: "onChange",
     defaultValues: {
       title: "",
     },
@@ -35,6 +35,7 @@ export const NewColumn: React.FC = () => {
           onSubmit={handleSubmit(onSubmitColumn)}
         >
           <button
+            type="button"
             className="place-self-end text-xl text-white"
             onClick={() => setIsOpen(false)}
           >
@@ -52,6 +53,7 @@ export const NewColumn: React.FC = () => {
         </form>
       ) : (
         <button
+          type="button"
           className="rounded-full bg-white/10 p-4 text-white hover:bg-white/20"
           onClick={() => setIsOpen(!isOpen)}
         >

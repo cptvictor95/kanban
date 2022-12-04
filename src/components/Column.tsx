@@ -12,10 +12,10 @@ export interface Column {
 
 export const Column: React.FC<{ column: Column }> = ({ column }) => {
   const cards = trpc.card.getByColumn.useQuery({ columnId: column.id });
-  const loading = cards.isLoading || cards.isFetching || cards.isRefetching;
+  const loading = cards.isFetching;
 
   return (
-    <section className="flex min-w-fit flex-col items-center gap-2 rounded-md bg-gradient-to-b from-[#4d0235] to-[#32122e] px-2 py-4 md:gap-2">
+    <section className="flex h-fit min-w-fit flex-col items-center gap-2 rounded-md bg-gradient-to-b from-[#4d0235] to-[#32122e] px-2 py-4 md:gap-2">
       <header className="flex items-center justify-between gap-4 pb-2">
         <h2 className="text-bold min-w-fit text-xl text-white">
           {column.title}
