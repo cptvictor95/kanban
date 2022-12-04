@@ -1,6 +1,7 @@
 import React from "react";
 import { trpc } from "../utils/trpc";
 import { Card } from "./Card";
+import { Loading } from "./Loading";
 import { NewCard } from "./NewCard";
 
 export interface Column {
@@ -9,9 +10,10 @@ export interface Column {
   cards?: Card[];
 }
 
-const Column: React.FC<{ column: Column }> = ({ column }) => {
+export const Column: React.FC<{ column: Column }> = ({ column }) => {
   const cards = trpc.card.getByColumn.useQuery({ columnId: column.id });
-  console.log("CARDS", cards.data);
+  const loading = cards.isLoading || cards.isFetching || cards.isRefetching;
+
   return (
     <section className="flex min-w-fit flex-col items-center gap-2 rounded-md bg-gradient-to-b from-[#4d0235] to-[#32122e] px-2 py-4 md:gap-2">
       <header className="flex items-center justify-between gap-4 pb-2">
@@ -26,12 +28,12 @@ const Column: React.FC<{ column: Column }> = ({ column }) => {
             : `${cards?.data?.length} issues`}
         </p>
       </header>
-      {cards?.data?.map((card) => (
-        <Card key={card.id} card={card} />
-      ))}
+      {loading ? (
+        <Loading />
+      ) : (
+        cards?.data?.map((card) => <Card key={card.id} card={card} />)
+      )}
       <NewCard columnId={column.id} />
     </section>
   );
 };
-
-export default Column;

@@ -4,7 +4,7 @@ import Main from "../layouts/Main";
 import { Header } from "../components/Header";
 import { NewColumn } from "../components/NewColumn";
 
-import Board from "../components/Board";
+import { Board } from "../components/Board";
 
 const Home: NextPage = () => {
   return (
