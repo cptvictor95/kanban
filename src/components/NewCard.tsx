@@ -9,7 +9,7 @@ export interface CardDTO {
   userId: string;
 }
 
-export const NewCard: React.FC = () => {
+export const NewCard: React.FC<{ columnId: string }> = ({ columnId }) => {
   const { mutateAsync } = trpc.card.create.useMutation();
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm<CardDTO>({
@@ -24,6 +24,7 @@ export const NewCard: React.FC = () => {
     mutateAsync({
       title: data.title,
       description: data.title,
+      columnId: columnId,
     });
     reset();
     setIsOpen(false);
@@ -32,7 +33,7 @@ export const NewCard: React.FC = () => {
   return (
     <>
       <button
-        className="rounded-full bg-white/10 p-4 text-white hover:bg-white/20"
+        className="w-max rounded-full bg-white/10 p-4 text-white hover:bg-white/20"
         onClick={() => setIsOpen(!isOpen)}
       >
         <FaPlus />

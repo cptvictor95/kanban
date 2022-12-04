@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { protectedProcedure, publicProcedure, router } from "../trpc";
+import { protectedProcedure, router } from "../trpc";
 
 export const cardRouter = router({
   create: protectedProcedure
@@ -7,6 +7,7 @@ export const cardRouter = router({
       z.object({
         title: z.string(),
         description: z.string(),
+        columnId: z.string(),
       })
     )
     .mutation(({ input, ctx }) => {
@@ -17,10 +18,17 @@ export const cardRouter = router({
           title: input.title,
           description: input.description,
           userId,
+          columnId: input.columnId,
         },
       });
     }),
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.card.findMany();
-  }),
+  getByColumn: protectedProcedure
+    .input(z.object({ columnId: z.string() }))
+    .query(({ input, ctx }) => {
+      const userId = ctx.session.user.id;
+
+      return ctx.prisma.card.findMany({
+        where: { columnId: input.columnId, userId },
+      });
+    }),
 });

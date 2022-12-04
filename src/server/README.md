@@ -7,11 +7,13 @@
 - id
 - title
 - description
+- columnId
 
 ### Column
 
 - id
 - name
+- cards
 
 ### User
 
