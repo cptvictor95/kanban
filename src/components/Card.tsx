@@ -1,5 +1,6 @@
 import React from "react";
 import { HiDotsVertical } from "react-icons/hi";
+import { trpc } from "../utils/trpc";
 
 export type Card = {
   id: string;
@@ -8,6 +9,13 @@ export type Card = {
 };
 
 export const Card: React.FC<{ card: Card }> = ({ card }) => {
+  const { mutateAsync } = trpc.card.delete.useMutation();
+  const onDelete = (cardId: string) => {
+    mutateAsync({
+      cardId,
+    });
+  };
+
   return (
     <article className="flex w-full flex-col gap-4 rounded-xl bg-white/10 p-4 hover:cursor-grab hover:bg-white/20">
       <header className="flex items-center justify-between gap-4">
@@ -21,9 +29,9 @@ export const Card: React.FC<{ card: Card }> = ({ card }) => {
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow"
+            className="dropdown-content menu rounded-box w-32 bg-base-100 p-2 shadow"
           >
-            <li>
+            <li onClick={() => onDelete(card.id)}>
               <a>Delete</a>
             </li>
           </ul>

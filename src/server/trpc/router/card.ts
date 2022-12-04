@@ -31,4 +31,9 @@ export const cardRouter = router({
         where: { columnId: input.columnId, userId },
       });
     }),
+  delete: protectedProcedure
+    .input(z.object({ cardId: z.string() }))
+    .mutation(({ input, ctx }) => {
+      return ctx.prisma.card.delete({ where: { id: input.cardId } });
+    }),
 });
