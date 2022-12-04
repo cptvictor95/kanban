@@ -12,7 +12,7 @@ export interface Column {
 
 export const Column: React.FC<{ column: Column }> = ({ column }) => {
   const cards = trpc.card.getByColumn.useQuery({ columnId: column.id });
-  const loading = cards.isFetching;
+  const loading = !cards.isPreviousData && cards.isFetching;
 
   return (
     <section className="flex h-fit min-w-fit flex-col items-center gap-2 rounded-md bg-gradient-to-b from-[#4d0235] to-[#32122e] px-2 py-4 md:gap-2">
