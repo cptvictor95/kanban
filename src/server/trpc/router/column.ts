@@ -24,4 +24,15 @@ export const columnRouter = router({
 
     return ctx.prisma.column.findMany({ where: { userId: userId } });
   }),
+  delete: protectedProcedure
+    .input(
+      z.object({
+        columnId: z.string(),
+      })
+    )
+    .mutation(({ input, ctx }) => {
+      return ctx.prisma.column.delete({
+        where: { id: input.columnId },
+      });
+    }),
 });
