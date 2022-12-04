@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaPlus } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 import { trpc } from "../utils/trpc";
 
 export interface ColumnDTO {
@@ -34,6 +34,12 @@ export const NewColumn: React.FC = () => {
           className="grid grid-cols-1 gap-2 rounded-md bg-gradient-to-b from-[#4d0235] to-[#32122e] px-2 py-4 md:gap-2"
           onSubmit={handleSubmit(onSubmitColumn)}
         >
+          <button
+            className="place-self-end text-xl text-white"
+            onClick={() => setIsOpen(false)}
+          >
+            <IoClose />
+          </button>
           <input
             type="text"
             placeholder="Card title"
@@ -49,7 +55,7 @@ export const NewColumn: React.FC = () => {
           className="rounded-full bg-white/10 p-4 text-white hover:bg-white/20"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <FaPlus /> new column
+          New column
         </button>
       )}
     </>

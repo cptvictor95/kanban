@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 import { trpc } from "../utils/trpc";
 
 export interface CardDTO {
@@ -44,6 +45,12 @@ export const NewCard: React.FC<{ columnId: string }> = ({ columnId }) => {
           className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:cursor-grab hover:bg-white/20"
           onSubmit={handleSubmit(onSubmitCard)}
         >
+          <button
+            className="place-self-end text-xl text-white"
+            onClick={() => setIsOpen(false)}
+          >
+            <IoClose />
+          </button>
           <input
             type="text"
             placeholder="Card title"
