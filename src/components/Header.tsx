@@ -1,6 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
 import { IoArrowBack } from "react-icons/io5";
+import { FaHome } from "react-icons/fa";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
@@ -23,8 +24,17 @@ export const Header: React.FC = () => {
         onClick={() => router.push("/")}
         className="flex items-center gap-2 rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
       >
-        <IoArrowBack />
-        Go back
+        {router.asPath === "/" ? (
+          <>
+            <FaHome />
+            Home
+          </>
+        ) : (
+          <>
+            <IoArrowBack />
+            Go back
+          </>
+        )}
       </button>
 
       <p className="flex items-center gap-2 text-center text-xl text-white">

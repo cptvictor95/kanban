@@ -12,7 +12,7 @@ export interface CardDTO {
 export const NewCard: React.FC = () => {
   const { mutateAsync } = trpc.card.create.useMutation();
   const [isOpen, setIsOpen] = useState(false);
-  const { register, handleSubmit } = useForm<CardDTO>({
+  const { register, handleSubmit, reset } = useForm<CardDTO>({
     mode: "onSubmit",
     defaultValues: {
       title: "",
@@ -25,6 +25,8 @@ export const NewCard: React.FC = () => {
       title: data.title,
       description: data.title,
     });
+    reset();
+    setIsOpen(false);
   };
 
   return (
