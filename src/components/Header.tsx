@@ -4,7 +4,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const { data: sessionData } = useSession();
   const router = useRouter();
 
@@ -50,5 +50,3 @@ const Header: React.FC = () => {
     </nav>
   );
 };
-
-export default Header;

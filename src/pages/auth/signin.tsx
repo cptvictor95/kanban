@@ -3,7 +3,7 @@ import { type AppProviders } from "next-auth/providers";
 import { type GetServerSideProps } from "next";
 import { FaDiscord, FaGoogle } from "react-icons/fa";
 import Main from "../../layouts/Main";
-import Header from "../../components/Header";
+import { Header } from "../../components/Header";
 
 export interface LoginDTO {
   email: string;

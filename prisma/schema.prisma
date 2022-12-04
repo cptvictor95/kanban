@@ -15,9 +15,11 @@ datasource db {
 }
 
 model Card {
-  id      String @id @default(cuid())
-  title   String
-  content String
+  id          String @id @default(cuid())
+  userId      String
+  title       String
+  description String
+  user        User   @relation(fields: [userId], references: [id])
 }
 
 // Necessary for Next auth
@@ -55,6 +57,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Card          Card[]
 }
 
 model VerificationToken {

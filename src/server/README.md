@@ -6,6 +6,7 @@
 
 - id
 - title
+- description
 
 ### Column
 
