@@ -1,48 +1,48 @@
 import { getProviders, signIn } from "next-auth/react";
 import { type AppProviders } from "next-auth/providers";
 import { type GetServerSideProps } from "next";
+import { FaDiscord, FaGoogle } from "react-icons/fa";
+import Main from "../../layouts/Main";
+import Header from "../../components/Header";
 
+export interface LoginDTO {
+  email: string;
+  password: string;
+}
 const SignIn: React.FC<{ providers: AppProviders }> = ({ providers }) => {
-  console.log("PROVIDERS", providers);
   return (
-    <>
+    <Main>
+      <Header />
       <div className="flex h-screen w-full flex-col items-center justify-center gap-4">
-        <form className="flex w-72 flex-col gap-4">
-          <h1 className="text-center text-4xl font-bold">Login</h1>
-          <div className="grid gap-2">
-            <label htmlFor="">Email</label>
-            <input type="email" className="rounded-md bg-fuchsia-50 p-2" />
-          </div>
-          <div className="grid gap-2">
-            <label htmlFor="">Password</label>
-            <input type="password" className="rounded-md bg-fuchsia-50 p-2" />
-          </div>
-
-          <button className="rounded-md bg-fuchsia-600 px-4 py-2 text-fuchsia-50 hover:bg-fuchsia-700">
-            Sign in
-          </button>
-        </form>
-
-        <span className="mx-4 h-px w-72 bg-slate-100"></span>
-        <div className="flex w-72 flex-col gap-4">
+        <div className="flex flex-col gap-4">
+          <h1 className="py-4 text-center text-3xl font-bold text-white">
+            Login
+          </h1>
           {Object.values(providers).map((provider) => {
             return (
               <button
                 key={provider.name}
-                onClick={() => signIn(provider.id)}
-                className="rounded-md bg-fuchsia-200 px-4 py-2 hover:bg-fuchsia-300"
+                onClick={() =>
+                  signIn(provider.id, { callbackUrl: "http://localhost:3000/" })
+                }
+                className="flex items-center gap-2 rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
               >
+                {provider.name.toLowerCase() === "discord" ? (
+                  <FaDiscord />
+                ) : (
+                  <FaGoogle />
+                )}
                 Sign in with {provider.name}
               </button>
             );
           })}
         </div>
       </div>
-    </>
+    </Main>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const providers = await getProviders();
 
   return {
