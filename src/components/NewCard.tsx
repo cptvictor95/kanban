@@ -14,14 +14,14 @@ export const NewCard: React.FC<{ columnId: string }> = ({ columnId }) => {
   const { mutateAsync } = trpc.card.create.useMutation();
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm<CardDTO>({
-    mode: "onSubmit",
+    mode: "onChange",
     defaultValues: {
       title: "",
       description: "",
     },
   });
 
-  const onSubmitCard = async (data: CardDTO) => {
+  const onSubmitCard = (data: CardDTO) => {
     mutateAsync({
       title: data.title,
       description: data.title,
@@ -34,6 +34,7 @@ export const NewCard: React.FC<{ columnId: string }> = ({ columnId }) => {
   return (
     <>
       <button
+        type="button"
         className="w-max rounded-full bg-white/10 p-4 text-white hover:bg-white/20"
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -46,18 +47,21 @@ export const NewCard: React.FC<{ columnId: string }> = ({ columnId }) => {
           onSubmit={handleSubmit(onSubmitCard)}
         >
           <button
+            type="button"
             className="place-self-end text-xl text-white"
             onClick={() => setIsOpen(false)}
           >
             <IoClose />
           </button>
+
           <input
             type="text"
             placeholder="Card title"
             className="rounded-md bg-transparent p-2"
             {...register("title", { required: "Type something" })}
           />
-          <textarea
+          <input
+            type="text"
             placeholder="Card description"
             className="rounded-md bg-transparent p-2"
             {...register("description", { required: "Type something" })}
