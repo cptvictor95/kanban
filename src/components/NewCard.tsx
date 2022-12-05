@@ -1,4 +1,4 @@
-import { QueryClient } from "@tanstack/react-query";
+import { type QueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
@@ -89,7 +89,7 @@ export const NewCard: React.FC<{ columnId: string; client: QueryClient }> = ({
             className="rounded-md bg-transparent p-2"
             {...register("description", { required: "Type something" })}
           />
-          <button type="submit" className="h-0 opacity-0">
+          <button type="submit" className="sm:opacity-100 md:h-0 md:opacity-0">
             create
           </button>
         </form>

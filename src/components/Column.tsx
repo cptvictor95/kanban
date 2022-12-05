@@ -44,15 +44,15 @@ export const Column: React.FC<{ column: Column }> = ({ column }) => {
   };
 
   return (
-    <section className="flex h-fit min-w-fit flex-col items-center gap-2 rounded-md bg-gradient-to-b from-[#4d0235] to-[#32122e] px-2 py-4 md:gap-2">
-      <header className="flex items-center justify-between gap-4 pb-2">
+    <section className="flex h-fit w-full min-w-fit max-w-xs flex-col items-center gap-2 rounded-md bg-gradient-to-b from-[#3d012a] to-[#32122e] px-2 py-4 md:gap-2">
+      <header className="flex w-full items-center justify-between gap-4 pb-2">
         <h2 className="text-bold min-w-fit text-lg uppercase text-white">
           {column.title}
         </h2>
 
         <div className="flex items-center">
-          <p className="text-bold text-md min-w-fit text-white">
-            {cards?.data?.length == 0
+          <p className="text-bold text-md min-w-fit text-slate-200">
+            {cards?.data && cards?.data?.length == 0
               ? ""
               : cards?.data?.length == 1
               ? `${cards?.data?.length} issue`
@@ -67,7 +67,7 @@ export const Column: React.FC<{ column: Column }> = ({ column }) => {
             </label>
             <ul
               tabIndex={0}
-              className="dropdown-content menu rounded-box w-32 bg-base-100 p-2 shadow"
+              className="dropdown-content menu rounded-box w-32 bg-gradient-to-b from-[#32122e] to-[#32122e] p-2 shadow"
             >
               <li onClick={() => onDelete(column.id)}>
                 <a>Delete</a>

@@ -9,7 +9,7 @@ export const Board: React.FC = () => {
     !columns.isPreviousData && (columns.isFetching || columns.isRefetching);
 
   return (
-    <section className="flex gap-4">
+    <section className="flex w-full gap-4">
       {loading ? (
         <Loading />
       ) : columns?.data && columns?.data.length == 0 ? (
