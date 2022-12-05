@@ -1,9 +1,12 @@
+import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { trpc } from "../utils/trpc";
 import { Column } from "./Column";
 import { Loading } from "./Loading";
+import { NewColumn } from "./NewColumn";
 
 export const Board: React.FC = () => {
+  const client = useQueryClient();
   const columns = trpc.column.getAll.useQuery();
   const loading =
     !columns.isPreviousData && (columns.isFetching || columns.isRefetching);
@@ -19,6 +22,7 @@ export const Board: React.FC = () => {
           return <Column key={column.id} column={column} />;
         })
       )}
+      <NewColumn client={client} />
     </section>
   );
 };

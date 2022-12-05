@@ -2,6 +2,7 @@
 import { type QueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaPlus } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { trpc } from "../utils/trpc";
 import type { Column } from "./Column";
@@ -75,10 +76,10 @@ export const NewColumn: React.FC<{ client: QueryClient }> = ({ client }) => {
       ) : (
         <button
           type="button"
-          className="rounded-full bg-white/10 p-4 text-white hover:bg-white/20"
+          className="h-fit min-w-fit rounded-full bg-white/10 p-4 text-white hover:bg-white/20"
           onClick={() => setIsOpen(!isOpen)}
         >
-          New column
+          <FaPlus />
         </button>
       )}
     </>

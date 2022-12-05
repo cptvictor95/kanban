@@ -3,14 +3,10 @@ import { type NextPage } from "next";
 
 import Main from "../layouts/Main";
 import { Header } from "../components/Header";
-import { NewColumn } from "../components/NewColumn";
-
 import { Board } from "../components/Board";
-import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
-  const client = useQueryClient();
   const { data: sessionData } = useSession();
 
   return (
@@ -22,14 +18,9 @@ const Home: NextPage = () => {
         </h1>
 
         {sessionData ? (
-          <>
-            <Board />
-            <NewColumn client={client} />
-          </>
+          <Board />
         ) : (
-          <>
-            <p className="text-white">Sign in to start using the kanban.</p>
-          </>
+          <p className="text-white">Sign in to start using the kanban.</p>
         )}
       </div>
     </Main>
