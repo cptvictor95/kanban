@@ -1,5 +1,4 @@
 import { signIn, signOut, useSession } from "next-auth/react";
-import { trpc } from "../utils/trpc";
 import { IoArrowBack } from "react-icons/io5";
 import { FaHome } from "react-icons/fa";
 import { useRouter } from "next/router";
@@ -8,15 +7,6 @@ import Image from "next/image";
 export const Header: React.FC = () => {
   const { data: sessionData } = useSession();
   const router = useRouter();
-
-  const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
-  const { data } = trpc.auth.getSession.useQuery();
-
-  console.log("SECRET MESSAGE", secretMessage);
-  console.log("AUTH SESSION", data);
 
   return (
     <nav className="flex h-20 w-full items-center justify-between px-8">

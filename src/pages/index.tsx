@@ -7,9 +7,12 @@ import { NewColumn } from "../components/NewColumn";
 
 import { Board } from "../components/Board";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
   const client = useQueryClient();
+  const { data: sessionData } = useSession();
+
   return (
     <Main>
       <Header />
@@ -17,9 +20,16 @@ const Home: NextPage = () => {
         <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
           Kanban
         </h1>
-
-        <Board />
-        <NewColumn client={client} />
+        {sessionData ? (
+          <>
+            <Board />
+            <NewColumn client={client} />
+          </>
+        ) : (
+          <>
+            <p className="text-white">Sign in to start using the kanban.</p>
+          </>
+        )}
       </div>
     </Main>
   );
