@@ -1,12 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { type NextPage } from "next";
 
 import Main from "../layouts/Main";
 import { Header } from "../components/Header";
 import { NewColumn } from "../components/NewColumn";
 
-import Board from "../components/Board";
+import { Board } from "../components/Board";
+import { useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
+  const client = useQueryClient();
+  const { data: sessionData } = useSession();
+
   return (
     <Main>
       <Header />
@@ -15,8 +21,16 @@ const Home: NextPage = () => {
           Kanban
         </h1>
 
-        <Board />
-        <NewColumn />
+        {sessionData ? (
+          <>
+            <Board />
+            <NewColumn client={client} />
+          </>
+        ) : (
+          <>
+            <p className="text-white">Sign in to start using the kanban.</p>
+          </>
+        )}
       </div>
     </Main>
   );

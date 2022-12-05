@@ -1,17 +1,24 @@
 import React from "react";
 import { trpc } from "../utils/trpc";
-import Column from "./Column";
+import { Column } from "./Column";
+import { Loading } from "./Loading";
 
-const Board = () => {
+export const Board: React.FC = () => {
   const columns = trpc.column.getAll.useQuery();
+  const loading =
+    !columns.isPreviousData && (columns.isFetching || columns.isRefetching);
+
   return (
     <section className="flex gap-4">
-      {columns?.data &&
-        columns.data.map((column) => {
+      {loading ? (
+        <Loading />
+      ) : columns?.data && columns?.data.length == 0 ? (
+        <p className="text-white">You haven&apos;t created any columns yet.</p>
+      ) : (
+        columns?.data?.map((column: Column) => {
           return <Column key={column.id} column={column} />;
-        })}
+        })
+      )}
     </section>
   );
 };
-
-export default Board;
