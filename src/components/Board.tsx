@@ -3,17 +3,19 @@ import { trpc } from "../utils/trpc";
 import { Column } from "./Column";
 import { Loading } from "./Loading";
 
-export const Board = () => {
+export const Board: React.FC = () => {
   const columns = trpc.column.getAll.useQuery();
-  const loading = !columns.isPreviousData && columns.isLoading;
+  const loading =
+    !columns.isPreviousData && (columns.isFetching || columns.isRefetching);
 
   return (
     <section className="flex gap-4">
       {loading ? (
         <Loading />
+      ) : columns?.data && columns?.data.length == 0 ? (
+        <p className="text-white">You haven&apos;t created any columns yet.</p>
       ) : (
-        columns?.data &&
-        columns.data.map((column) => {
+        columns?.data?.map((column: Column) => {
           return <Column key={column.id} column={column} />;
         })
       )}

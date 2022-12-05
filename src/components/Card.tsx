@@ -1,3 +1,4 @@
+import { type QueryClient } from "@tanstack/react-query";
 import React from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import { trpc } from "../utils/trpc";
@@ -6,10 +7,33 @@ export type Card = {
   id: string;
   title: string;
   description: string;
+  columnId: string;
 };
 
-export const Card: React.FC<{ card: Card }> = ({ card }) => {
-  const { mutateAsync } = trpc.card.delete.useMutation();
+const updateCache = ({ client, data }: { client: QueryClient; data: Card }) => {
+  client.setQueryData(
+    [
+      ["card", "getByColumn"],
+      { input: { columnId: data.columnId }, type: "query" },
+    ],
+    (oldData) => {
+      const newData = oldData as Card[];
+
+      return newData.filter((card) => card.id !== data.id);
+    }
+  );
+};
+
+export const Card: React.FC<{ card: Card; client: QueryClient }> = ({
+  card,
+  client,
+}) => {
+  const { mutateAsync } = trpc.card.delete.useMutation({
+    onSuccess: (data) => {
+      updateCache({ client, data });
+    },
+  });
+
   const onDelete = (cardId: string) => {
     mutateAsync({
       cardId,
@@ -20,7 +44,7 @@ export const Card: React.FC<{ card: Card }> = ({ card }) => {
     <article className="flex w-full flex-col gap-4 rounded-xl bg-white/10 p-4 hover:cursor-grab hover:bg-white/20">
       <header className="flex items-center justify-between gap-4">
         <h3 className="text-xl font-semibold text-white">{card.title}</h3>
-        <div className="dropdown dropdown-top dropdown-end">
+        <div className="dropdown-top dropdown-end dropdown">
           <label
             tabIndex={0}
             className="btn-ghost btn-square btn-sm btn hover:cursor-pointer"

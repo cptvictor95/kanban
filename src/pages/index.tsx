@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { type NextPage } from "next";
 
 import Main from "../layouts/Main";
@@ -5,8 +6,10 @@ import { Header } from "../components/Header";
 import { NewColumn } from "../components/NewColumn";
 
 import { Board } from "../components/Board";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Home: NextPage = () => {
+  const client = useQueryClient();
   return (
     <Main>
       <Header />
@@ -16,7 +19,7 @@ const Home: NextPage = () => {
         </h1>
 
         <Board />
-        <NewColumn />
+        <NewColumn client={client} />
       </div>
     </Main>
   );
